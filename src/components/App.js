@@ -7,7 +7,11 @@ import EditProfilePopup from './EditProfilePopup';
 import ImagePopup from './ImagePopup.js';
 import EditAvatarPopup from './EditAvatarPopup';
 import AddPlacePopup from './AddPlacePopup.js';
+import Login from './Login';
+import Registration from './Registration';
+import ProtectedRoute from './ProtectedRoute';
 import React from 'react';
+import { Link, Route, Switch } from 'react-router-dom';
 import api from '../utils/api.js';
 import avatar from '../images/user-image.jpg';
 import { CurrentUserContext } from '../contexts/CurrentUserContext';
@@ -26,6 +30,8 @@ function App() {
     about: 'Explorer',
     avatar: avatar,
   });
+
+  const [isLoggedIn, setIsLoggedIn] = React.useState(false);
 
   const [cards, setCards] = React.useState([]);
 
@@ -120,41 +126,39 @@ function App() {
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
-      <div className="page">
+      
+        <div className="page">
         <Header />
-        <Main
-          onEditProfile={handleEditProfileClick}
-          onEditAvatar={handleEditAvatarClick}
-          onAddPlace={handleAddPlaceClick}
-          onCardClick={handleCardClick}
-          cards={cards}
-          onCardLike={handleCardLike}
-          onCardDelete={handleCardDelete}
-        />
+        <Switch>
+          <Route path="/login">
+            <Login />
+          </Route>
+          <Route path="/register">
+            <Registration />
+          </Route>
+          <ProtectedRoute isLoggedIn={isLoggedIn} path="/"
+            onEditProfile={handleEditProfileClick}
+            onEditAvatar={handleEditAvatarClick}
+            onAddPlace={handleAddPlaceClick}
+            onCardClick={handleCardClick}
+            cards={cards}
+            onCardLike={handleCardLike}
+            onCardDelete={handleCardDelete}
+            isEditProfilePopupOpen={isEditProfilePopupOpen}
+            closeAllPopups={closeAllPopups}
+            handleUpdateUser={handleUpdateUser}
+            isEditAvatarPopupOpen={isEditAvatarPopupOpen}
+            handleUpdateAvatar={handleUpdateAvatar}
+            isAddPlacePopupOpen={isAddPlacePopupOpen}
+            handleAddCard={handleAddCard}
+            selectedCard={selectedCard}
+            component={Main}
+              />
+          
+        </Switch>
         <Footer />
-        <EditProfilePopup
-          isOpen={isEditProfilePopupOpen}
-          onClose={closeAllPopups}
-          onUpdateUser={handleUpdateUser}
-        />
-        <EditAvatarPopup
-          isOpen={isEditAvatarPopupOpen}
-          onClose={closeAllPopups}
-          onUpdateAvatar={handleUpdateAvatar}
-        />
-        <AddPlacePopup
-          isOpen={isAddPlacePopupOpen}
-          onClose={closeAllPopups}
-          onAddCard={handleAddCard}
-        />
-        <PopupWithForm
-          onClose={closeAllPopups}
-          title="Are you sure?"
-          name="remove-card"
-          buttonText="Yes"
-        />
-        <ImagePopup card={selectedCard} onClose={closeAllPopups} />
       </div>
+      
     </CurrentUserContext.Provider>
   );
 }

@@ -1,0 +1,10 @@
+@import url('./__form/authentication__form.css');
+@import url('./__title/authentication__title.css');
+@import url('./__input/authentication__input.css');
+@import url('./__submit/authentication__submit.css');
+@import url('./__link/authentication__link.css');
+
+.authentication {
+  margin: 60px auto 0;
+  min-width: 358px;
+}

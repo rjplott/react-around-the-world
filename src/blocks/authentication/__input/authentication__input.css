@@ -1,0 +1,13 @@
+.authentication__input {
+  background-color: black;
+  border: none;
+  height: 27px;
+  color: #ccc;
+  border-bottom: 2px solid #ccc;
+  font-size: 14px;
+  line-height: 1.2;
+}
+
+.authentication__input:first-of-type {
+  margin-bottom: 30px;
+}
