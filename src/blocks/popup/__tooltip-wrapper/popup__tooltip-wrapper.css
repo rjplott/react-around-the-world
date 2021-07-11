@@ -1,0 +1,8 @@
+.popup__tooltip-wrapper {
+  background-color: #fff;
+  min-width: 430px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-radius: 10px;
+}

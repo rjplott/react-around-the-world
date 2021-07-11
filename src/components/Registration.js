@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import InfoTooltip from './InfoTooltip';
 
 export default function Registration() {
 
@@ -11,6 +12,7 @@ export default function Registration() {
 
   return (
     <section className="authentication">
+      <InfoTooltip isOpen={false} registrationSuccess={true} />
       <form name="registration-form" className="authentication__form">
         <h2 className="authentication__title">Sign up</h2>
         <input required type="email" placeholder="Email" name="email" id="registration-email" className="authentication__input" value={emailValue} onChange={handleEmailValueChange} />

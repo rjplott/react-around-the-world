@@ -2,16 +2,11 @@ import '../App.css';
 import Header from './Header.js';
 import Main from './Main.js';
 import Footer from './Footer.js';
-import PopupWithForm from './PopupWithForm.js';
-import EditProfilePopup from './EditProfilePopup';
-import ImagePopup from './ImagePopup.js';
-import EditAvatarPopup from './EditAvatarPopup';
-import AddPlacePopup from './AddPlacePopup.js';
 import Login from './Login';
 import Registration from './Registration';
 import ProtectedRoute from './ProtectedRoute';
 import React from 'react';
-import { Link, Route, Switch } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 import api from '../utils/api.js';
 import avatar from '../images/user-image.jpg';
 import { CurrentUserContext } from '../contexts/CurrentUserContext';
@@ -31,7 +26,9 @@ function App() {
     avatar: avatar,
   });
 
-  const [isLoggedIn, setIsLoggedIn] = React.useState(false);
+  const [isLoggedIn, setIsLoggedIn] = React.useState(true);
+
+  const [isLoggingIn, setIsLoggingIn] = React.useState(true);
 
   const [cards, setCards] = React.useState([]);
 
@@ -128,7 +125,7 @@ function App() {
     <CurrentUserContext.Provider value={currentUser}>
       
         <div className="page">
-        <Header />
+        <Header isLoggedIn={isLoggedIn} isLoggingIn={isLoggingIn} />
         <Switch>
           <Route path="/login">
             <Login />
@@ -153,6 +150,7 @@ function App() {
             handleAddCard={handleAddCard}
             selectedCard={selectedCard}
             component={Main}
+            header={Header}
               />
           
         </Switch>
