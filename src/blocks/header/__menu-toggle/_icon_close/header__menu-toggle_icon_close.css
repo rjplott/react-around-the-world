@@ -1,0 +1,4 @@
+.header__menu-toggle_icon_close {
+  background: url("../../../../images/close-icon.svg");
+  transform: rotate(45deg);
+}

@@ -13,3 +13,9 @@
 .authentication_submit:hover {
   opacity: 0.85;
 }
+
+@media screen and (max-width: 450px) {
+  .authentication__submit {
+    margin-top: 173px;
+  }
+}

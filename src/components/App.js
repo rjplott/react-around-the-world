@@ -5,6 +5,7 @@ import Footer from './Footer.js';
 import Login from './Login';
 import Registration from './Registration';
 import ProtectedRoute from './ProtectedRoute';
+import InfoTooltip from './InfoTooltip';
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 import api from '../utils/api.js';
@@ -28,7 +29,7 @@ function App() {
 
   const [isLoggedIn, setIsLoggedIn] = React.useState(true);
 
-  const [isLoggingIn, setIsLoggingIn] = React.useState(true);
+  const [isLoggingIn, setIsLoggingIn] = React.useState(false);
 
   const [cards, setCards] = React.useState([]);
 
@@ -123,7 +124,6 @@ function App() {
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
-      
         <div className="page">
         <Header isLoggedIn={isLoggedIn} isLoggingIn={isLoggingIn} />
         <Switch>
@@ -132,6 +132,7 @@ function App() {
           </Route>
           <Route path="/register">
             <Registration />
+            <InfoTooltip isOpen={true} registrationSuccess={true} />
           </Route>
           <ProtectedRoute isLoggedIn={isLoggedIn} path="/"
             onEditProfile={handleEditProfileClick}
@@ -156,7 +157,6 @@ function App() {
         </Switch>
         <Footer />
       </div>
-      
     </CurrentUserContext.Provider>
   );
 }

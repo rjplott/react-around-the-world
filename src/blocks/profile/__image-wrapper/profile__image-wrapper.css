@@ -3,3 +3,9 @@
   position: relative;
   margin: 40px 0 50px;
 }
+
+@media screen and (max-width: 550px) {
+  .profile__image-wrapper {
+    margin: 42px auto 30px;
+  }
+}

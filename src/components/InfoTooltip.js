@@ -5,7 +5,7 @@ export default function InfoTooltip({ registrationSuccess, onClose, isOpen }) {
   return (
     <div
       className={
-        `popup popup_purpose_info_tooltip} ${isOpen ? `popup_opened` : ''}`}>
+        `popup popup_purpose_info_tooltip ${isOpen ? `popup_opened` : ''}`}>
       <div className="popup__wrapper">
         <button
           aria-label="Close Form"

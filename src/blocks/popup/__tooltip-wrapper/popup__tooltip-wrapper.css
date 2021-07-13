@@ -6,3 +6,10 @@
   align-items: center;
   border-radius: 10px;
 }
+
+@media screen and (max-width: 550px) {
+  .popup__tooltip-wrapper {
+    min-width: 280px;
+    width: calc(100% - 40px);
+  }
+}

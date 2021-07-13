@@ -2,6 +2,13 @@
 @import url("./__link/header__link.css");
 @import url("./__email/header__email.css");
 @import url("./__menu/header__menu.css");
+@import url("./__menu-toggle/header__menu-toggle.css");
+@import url('./__menu-toggle/_icon_open/header__menu-toggle_icon_open.css');
+@import url('./__menu-toggle/_icon_close/header__menu-toggle_icon_close.css');
+@import url('./__menu-toggle/_visible/header__menu-toggle_visible.css');
+@import url('./__menu/_mobile/header__menu_mobile.css');
+@import url("./__menu/_closed/header__menu_closed.css");
+@import url('./__menu-wrapper/header__menu-wrapper.css');
 
 .header {
   min-width: 880px;
@@ -11,6 +18,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  flex-wrap: wrap;
 }
 
 @media screen and (max-width: 880px) {

@@ -8,6 +8,7 @@
 @media screen and (max-width: 550px) {
   .profile__wrapper {
     margin-bottom: 14px;
-    margin-top: 30px;
+    margin-top: 0px;
+    justify-content: center;
   }
 }

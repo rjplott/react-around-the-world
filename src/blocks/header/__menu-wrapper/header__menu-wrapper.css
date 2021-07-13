@@ -1,0 +1,5 @@
+@media screen and (max-width: 550px) {
+  .header__menu-wrapper {
+    margin-right: 30px;
+  }
+}
