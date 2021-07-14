@@ -2,15 +2,24 @@ import logo from '../images/logo.svg'
 import { Link } from 'react-router-dom'
 import React from 'react'
 
-export default function Header({ isLoggedIn, isLoggingIn }) {
+export default function Header({ isLoggedIn, isLoggingIn, onLogout, setIsLoggingIn, email }) {
   
   const [width, setWidth] = React.useState(window.innerWidth);
   const breakpoint = 550;
   const [isMobile, setIsMobile] = React.useState(width <= breakpoint)
   const [menuOpen, setMenuOpen] = React.useState(false);
 
+  const handleLinkClick = () => {
+    setIsLoggingIn(!isLoggingIn);
+  }
+
   const handleIconClick = () => {
     setMenuOpen(!menuOpen);
+  }
+
+  const handleLogoutClick = () => {
+    setMenuOpen(false);
+    onLogout();
   }
 
   React.useEffect(() => {
@@ -25,8 +34,8 @@ export default function Header({ isLoggedIn, isLoggingIn }) {
       (
         <header className="header page__header">
           <div className={`header__menu header__menu_mobile ${menuOpen ? "" : "header__menu_closed"}`}>
-            <p className="header__email">test@test.com</p>
-            <Link to="/login" className="header__link header__link_logout">Log out</Link>
+            <p className="header__email">{email}</p>
+            <Link className="header__link header__link_logout">Log out</Link>
           </div>
           <img src={logo} alt="Around the US's logo" className="header__logo" />
           <div className="header__menu-wrapper">
@@ -44,9 +53,9 @@ export default function Header({ isLoggedIn, isLoggingIn }) {
         <header className="header page__header">
           <img src={logo} alt="Around the US's logo" className="header__logo" />
           {isLoggingIn ?
-            <Link to="/signup" className="header__link">Sign up</Link>
+            <Link onClick={handleLinkClick} to="/signup" className="header__link">Sign up</Link>
             :
-            <Link to="/login" className="header__link">Log in</Link>}
+            <Link onClick={handleLinkClick} to="/login" className="header__link">Log in</Link>}
         </header>
       )
     }
@@ -59,8 +68,8 @@ export default function Header({ isLoggedIn, isLoggingIn }) {
           (
             <div className="header__menu-wrapper">
               <div className="header__menu">
-                <p className="header__email">test@test.com</p>
-                <Link to="/login" className="header__link">Log out</Link>
+                <p className="header__email">{email}</p>
+                <Link to="/login" className="header__link" onClick={handleLogoutClick}>Log out</Link>
               </div>
               <button
                 aria-label="Toggle Menu"
@@ -71,9 +80,9 @@ export default function Header({ isLoggedIn, isLoggingIn }) {
         ) 
           :
           isLoggingIn ?
-            <Link to="/signup" className="header__link">Sign up</Link>
+            <Link onClick={handleLinkClick} to="/signup" className="header__link">Sign up</Link>
             :
-            <Link to="/login" className="header__link">Log in</Link>
+            <Link onClick={handleLinkClick} to="/login" className="header__link">Log in</Link>
       }
     </header>
   )

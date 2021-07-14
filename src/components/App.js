@@ -5,12 +5,12 @@ import Footer from './Footer.js';
 import Login from './Login';
 import Registration from './Registration';
 import ProtectedRoute from './ProtectedRoute';
-import InfoTooltip from './InfoTooltip';
 import React from 'react';
-import { Route, Switch } from 'react-router-dom';
+import { Route, Switch, useHistory } from 'react-router-dom';
 import api from '../utils/api.js';
 import avatar from '../images/user-image.jpg';
 import { CurrentUserContext } from '../contexts/CurrentUserContext';
+import * as auth from '../utils/auth';
 
 function App() {
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] =
@@ -27,11 +27,12 @@ function App() {
     avatar: avatar,
   });
 
-  const [isLoggedIn, setIsLoggedIn] = React.useState(true);
-
+  const [isLoggedIn, setIsLoggedIn] = React.useState(false);
   const [isLoggingIn, setIsLoggingIn] = React.useState(false);
-
   const [cards, setCards] = React.useState([]);
+  const [email, setEmail] = React.useState("");
+
+  const history = useHistory();
 
   const handleApiError = (error) => console.log(error);
 
@@ -51,6 +52,24 @@ function App() {
     });
   }
 
+  const onRegister = () => {
+    setIsLoggingIn(true);
+  }
+
+  const onLogin = (email) => {
+    setIsLoggedIn(true);
+    setIsLoggingIn(false);
+    setEmail(email);
+  }
+
+  const onLogout = () => {
+    setIsLoggedIn(false);
+    setIsLoggingIn(true);
+    setEmail(null);
+    localStorage.removeItem('jwt');
+    history.push('/login');
+  }
+
   React.useEffect(() => {
     api
       .getInitialCards()
@@ -59,6 +78,25 @@ function App() {
       })
       .catch(handleApiError);
   }, []);
+
+  React.useEffect(() => {
+    function checkToken() {
+    const token = localStorage.getItem('jwt');
+
+    if (token) {
+      auth.validateToken(token)
+        .then(data => {
+          if (data) {
+            setIsLoggedIn(true);
+            history.push("/");
+            setEmail(data.email);
+          }
+        });
+      }
+  }
+
+    checkToken();
+  });
 
   const handleEditAvatarClick = () => {
     setIsEditAvatarPopupOpen(true);
@@ -125,14 +163,13 @@ function App() {
   return (
     <CurrentUserContext.Provider value={currentUser}>
         <div className="page">
-        <Header isLoggedIn={isLoggedIn} isLoggingIn={isLoggingIn} />
+        <Header isLoggedIn={isLoggedIn} isLoggingIn={isLoggingIn} onLogout={onLogout} setIsLoggingIn={setIsLoggingIn} email={email} />
         <Switch>
           <Route path="/login">
-            <Login />
+            <Login onLogin={onLogin} />
           </Route>
-          <Route path="/register">
-            <Registration />
-            <InfoTooltip isOpen={true} registrationSuccess={true} />
+          <Route path="/signup">
+            <Registration onRegister={onRegister} />
           </Route>
           <ProtectedRoute isLoggedIn={isLoggedIn} path="/"
             onEditProfile={handleEditProfileClick}

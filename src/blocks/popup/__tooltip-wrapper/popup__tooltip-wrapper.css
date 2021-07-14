@@ -10,6 +10,6 @@
 @media screen and (max-width: 550px) {
   .popup__tooltip-wrapper {
     min-width: 280px;
-    width: calc(100% - 40px);
+    margin: 0 20px;
   }
 }
