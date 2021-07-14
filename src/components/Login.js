@@ -1,27 +1,18 @@
 import React from 'react';
-import { Link, useHistory } from 'react-router-dom';
-import * as auth from '../utils/auth';
+import { Link } from 'react-router-dom';
 
 export default function Login({onLogin}) {
 
   const [password, setPassword] = React.useState("");
   const [email, setEmail] = React.useState("");
 
-  const history = useHistory();
 
   const handlePasswordChange = (e) => setPassword(e.target.value);
   const handleEmailChange = (e) => setEmail(e.target.value);
   
   const handleFormSubmit = (e) => {
     e.preventDefault();
-    auth.authorize({ email, password })
-      .then((data) => {
-        if (data.token) {
-          onLogin(email);
-          history.push('/');
-        }
-      })
-      .catch((err) => console.log(err));
+    onLogin(email, password )
   }
 
   return (

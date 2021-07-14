@@ -2,11 +2,6 @@ import pencil from '../images/edit-pencil.svg';
 import React from 'react';
 import Card from './Card.js';
 import { CurrentUserContext } from '../contexts/CurrentUserContext';
-import EditAvatarPopup from './EditAvatarPopup';
-import EditProfilePopup from './EditProfilePopup';
-import AddPlacePopup from './AddPlacePopup';
-import PopupWithForm from './PopupWithForm';
-import ImagePopup from './ImagePopup';
 
 export default function Main({
   onEditAvatar,
@@ -16,14 +11,6 @@ export default function Main({
   cards,
   onCardLike,
   onCardDelete,
-  isEditProfilePopupOpen,
-  closeAllPopups,
-  handleUpdateUser,
-  isEditAvatarPopupOpen,
-  handleUpdateAvatar,
-  isAddPlacePopupOpen,
-  handleAddCard,
-  selectedCard
 }) {
   const currentUser = React.useContext(CurrentUserContext);
 
@@ -76,28 +63,6 @@ export default function Main({
           />
         ))}
       </section>
-              <EditProfilePopup
-          isOpen={isEditProfilePopupOpen}
-          onClose={closeAllPopups}
-          onUpdateUser={handleUpdateUser}
-        />
-        <EditAvatarPopup
-          isOpen={isEditAvatarPopupOpen}
-          onClose={closeAllPopups}
-          onUpdateAvatar={handleUpdateAvatar}
-        />
-        <AddPlacePopup
-          isOpen={isAddPlacePopupOpen}
-          onClose={closeAllPopups}
-          onAddCard={handleAddCard}
-        />
-        <PopupWithForm
-          onClose={closeAllPopups}
-          title="Are you sure?"
-          name="remove-card"
-          buttonText="Yes"
-        />
-            <ImagePopup card={selectedCard} onClose={closeAllPopups} />
     </main>
   );
 }

@@ -22,7 +22,6 @@ export default function PopupWithForm({
           className="popup__form"
           name={`${name}-form`}
           onSubmit={onSubmit}
-          noValidate
         >
           <h2 className="popup__form-title">{title}</h2>
           {children}

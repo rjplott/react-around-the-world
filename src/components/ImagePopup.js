@@ -16,7 +16,7 @@ export default function ImagePopup({ card, onClose }) {
         ></button>
         <figure className="popup__full-image-container">
           <img
-            src={card ? card.link : ''}
+            src={card?.link}
             alt="Full size popup."
             className="popup__full-image"
           />
