@@ -1,8 +1,8 @@
-Around the U.S. project on React, featuring authorization and registration.
+Around the World is a React application that uses a Node backend that allows users to upload, like, and delete photos from around the world.  Around the World uses the following technologies: React, JSX, React Router, OOP, CSS3, Semantic HTML, BEM, and JWT.
 
-This repository will contain your own front-end project on React with added authorization and registration features.
-Start working with your previously built front end code from Sprint 11.
+Site can be found live at: https://www.rjplott.students.nomoreparties.site/
 
-All authorization, registration and token requests must go through to the server running on [https://register.nomoreparties.co](https://register.nomoreparties.co/).
+You can register or use the below test credentials to view the site:
 
-Good luck!
+Email: test.rjlott@test.com
+Password: 2PlPg0RCG6sa
