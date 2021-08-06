@@ -1,4 +1,4 @@
-const BASE_URL = 'http://localhost:3000';
+const BASE_URL = 'https://api.around-jl.students.nomoreparties.site';
 
 const checkResponse = (res) => {
   return res.ok
