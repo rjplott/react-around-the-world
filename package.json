@@ -17,7 +17,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "deploy": "npm run build && scp -r ./build/* rjplott@rjplott.students.nomoreparties.site:/home/rjplott/around-frontend",
+    "deploy": "npm run build && scp -r ./build/* ~/dev/yandex/react-around-api-full/frontend/"
   },
   "eslintConfig": {
     "extends": [

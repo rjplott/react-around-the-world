@@ -40,6 +40,7 @@ function App() {
   const [isInfoTooltipOpen, setIsInfoTooltipOpen] = React.useState(false);
   const [cards, setCards] = React.useState([]);
   const [email, setEmail] = React.useState("");
+  const [token, setToken] = React.useState("");
 
   const history = useHistory();
 
@@ -47,20 +48,21 @@ function App() {
 
   function handleCardLike(card) {
     // Check one more time if this card was already liked
-    const isLiked = card.likes.some((i) => i._id === currentUser._id);
+    const isLiked = card.likes.some((i) => i === currentUser._id);
 
     // Send a request to the API and getting the updated card data
-    api.changeLikeCardStatus(card._id, !isLiked)
-      .then((newCard) => {
-        setCards((state) => state.map((c) => (c._id === card._id ? newCard : c)));
+    api.changeLikeCardStatus(card._id, isLiked, token)
+      .then((res) => {
+        const newCard = res.data;
+        setCards((cards) => cards.map((c) => (c._id === card._id ? newCard : c)));
       })
       .catch(handleApiError);
   }
   function handleCardDelete(card) {
     // Send a request to the API and getting the updated card data
-    api.deleteCard(card._id)
+    api.deleteCard(card._id, token)
       .then(() => {
-        setCards((state) => state.filter((c) => c._id !== card._id));
+        setCards((cards) => cards.filter((c) => c._id !== card._id));
       })
       .catch(handleApiError);
   }
@@ -85,7 +87,16 @@ function App() {
           setIsLoggingIn(false);
           setEmail(email);
           history.push('/');
+          return data.token;
         }
+      })
+      .then((token) => {
+        api
+            .getUserInformation(token)
+            .then((user) => {
+              setCurrentUser(user.data);
+            })
+            .catch(handleApiError);
       })
       .catch(handleApiError);
   }
@@ -96,25 +107,17 @@ function App() {
     setIsRegistered(false);
     setEmail(null);
     localStorage.removeItem('jwt');
+    setToken("");
     history.push('/login');
   }
 
   function handleValidToken (data) {
-                setIsLoggedIn(true);
+            setIsLoggedIn(true);
             history.push("/");
             setEmail(data.email);
   }
 
-  React.useEffect(() => {
-    api
-      .getInitialCards()
-      .then((data) => {
-        setCards(data);
-      })
-      .catch(handleApiError);
-  }, []);
-
-  React.useEffect(() => {
+    React.useEffect(() => {
     function checkToken() {
     const token = localStorage.getItem('jwt');
 
@@ -123,7 +126,23 @@ function App() {
         .then(data => {
           if (data) {
             handleValidToken(data)
+            setToken(token);
           }
+        })
+        .then(() => {
+          api
+            .getInitialCards(token)
+            .then((cards) => {
+              setCards(cards.data);
+            })
+            .catch(handleApiError);
+          
+          api
+            .getUserInformation(token)
+            .then((user) => {
+              setCurrentUser(user.data);
+            })
+            .catch(handleApiError);
         })
         .catch(handleApiError);
       }
@@ -165,9 +184,9 @@ function App() {
 
   const handleAddCard = (newCard) => {
     api
-      .addCard(newCard)
+      .addCard(newCard, token)
       .then((newCard) => {
-        setCards([newCard, ...cards]);
+        setCards([newCard.data, ...cards]);
         closeAllPopups();
       })
       .catch(handleApiError);
@@ -175,9 +194,9 @@ function App() {
 
   const handleUpdateUser = (newInfo) => {
     api
-      .updateUserInformation(newInfo)
+      .updateUserInformation(newInfo, token)
       .then((user) => {
-        setCurrentUser(user);
+        setCurrentUser(user.data);
         closeAllPopups();
       })
       .catch(handleApiError);
@@ -185,22 +204,13 @@ function App() {
 
   const handleUpdateAvatar = (newAvatar) => {
     api
-      .updateUserAvartar(newAvatar)
+      .updateUserAvartar(newAvatar, token)
       .then((user) => {
-        setCurrentUser(user);
+        setCurrentUser(user.data);
         closeAllPopups();
       })
       .catch(handleApiError);
   };
-
-  React.useEffect(() => {
-    api
-      .getUserInformation()
-      .then((data) => {
-        setCurrentUser(data);
-      })
-      .catch(handleApiError);
-  }, []);
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
