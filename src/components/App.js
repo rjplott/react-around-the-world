@@ -35,7 +35,7 @@ function App() {
   });
 
   const [isLoggedIn, setIsLoggedIn] = React.useState(false);
-  const [isLoggingIn, setIsLoggingIn] = React.useState(false);
+  const [isLoggingIn, setIsLoggingIn] = React.useState(true);
   const [isRegistered, setIsRegistered] = React.useState(false);
   const [isInfoTooltipOpen, setIsInfoTooltipOpen] = React.useState(false);
   const [cards, setCards] = React.useState([]);
@@ -86,6 +86,7 @@ function App() {
           setIsLoggedIn(true);
           setIsLoggingIn(false);
           setEmail(email);
+          setToken(data.token);
           history.push('/');
           return data.token;
         }
@@ -93,7 +94,7 @@ function App() {
       .then((token) => {
         api
             .getUserInformation(token)
-            .then((user) => {
+          .then((user) => {
               setCurrentUser(user.data);
             })
             .catch(handleApiError);
@@ -119,7 +120,8 @@ function App() {
 
     React.useEffect(() => {
     function checkToken() {
-    const token = localStorage.getItem('jwt');
+      const token = localStorage.getItem('jwt');
+      
 
     if (token) {
       auth.validateToken(token)
