@@ -1,4 +1,4 @@
-const BASE_URL = 'https://api.around-jl.students.nomoreparties.site';
+const BASE_URL = 'https://around-the-world-jl.herokuapp.com';
 
 const checkResponse = (res) => {
   return res.ok

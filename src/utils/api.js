@@ -73,7 +73,7 @@ class Api {
 }
 
 const api = new Api({
-  baseURL: 'https://api.around-jl.students.nomoreparties.site',
+  baseURL: 'https://around-the-world-jl.herokuapp.com',
   headers: {
     'Content-Type': 'application/json',
   },
